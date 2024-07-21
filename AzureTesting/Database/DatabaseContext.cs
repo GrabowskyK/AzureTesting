@@ -9,10 +9,25 @@ namespace AzureTesting.Database
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
-       // public DbSet<Test> tests { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Team>()
+                .HasOne(t => t.League)
+                .WithMany()
+                .HasForeignKey(t => t.LeagueId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Team>()
+                .HasOne(t => t.Image)
+                .WithMany()
+                .HasForeignKey(t => t.ImageId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+        // public DbSet<Test> tests { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<League> Leagues { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
