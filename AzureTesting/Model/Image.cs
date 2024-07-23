@@ -3,13 +3,13 @@
     public class Image
     {
         public int Id { get; set; }
-        public byte[] FileBlob { get; set; }
+        public string BlobUrl { get; set; }
         public string Name { get; set; }
         public string CreatedDate { get; set; } = DateTime.UtcNow.ToString();
 
-        public Image(byte[] fileBlob, string name)
+        public Image(string blobUrl, string name)
         {
-            FileBlob = fileBlob;
+            BlobUrl = blobUrl;
             Name = name;
         }
     }

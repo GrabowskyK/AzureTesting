@@ -12,30 +12,13 @@ namespace AzureTesting.Service.ImageServ
             databaseContext = _databaseContext;
         }
 
-        public void SaveImageAsync(IFormFile image)
+        public void SaveImageAsync(string blobUrl, string FileName)
         {
-            Image newImage;
-            using (var memoryStream = new MemoryStream())
-            {
-                var fileBytes = memoryStream.ToArray();
-                newImage = new Image(fileBytes, image.FileName);      
-            }
+            Image newImage = new Image(blobUrl, FileName);
             databaseContext.Images.Add(newImage);
             databaseContext.SaveChanges();
         }
 
-        public ImageDTO? GetImage(int imageId) => databaseContext.Images
-            .Select(i => new ImageDTO()
-            {
-                Name = i.Name,
-                Bytes = i.FileBlob
-            }).FirstOrDefault();
 
-        public IEnumerable<ImageDTO> GetImages() => databaseContext.Images
-            .Select(i => new ImageDTO()
-            {
-                Name = i.Name,
-                Bytes = i.FileBlob
-            });
     }
 }

@@ -4,8 +4,6 @@ namespace AzureTesting.Service.ImageServ
 {
     public interface IImageService
     {
-        void SaveImageAsync(IFormFile image);
-        ImageDTO? GetImage(int imageId);
-        IEnumerable<ImageDTO> GetImages();
+        void SaveImageAsync(string blobUrl, string FileName);
     }
 }

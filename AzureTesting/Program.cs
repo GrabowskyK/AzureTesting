@@ -1,3 +1,6 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Storage.Blobs;
 using AzureTesting.Database;
 using AzureTesting.Model;
 using AzureTesting.Service.ImageServ;
@@ -21,14 +24,26 @@ builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILeagueService, LeagueService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+var keyVaultUrl = "https://privatekeygrabowsky.vault.azure.net/";
+var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+
+// Pobranie sekretu
+var secretToken = await secretClient.GetSecretAsync("jwtTokenKey");
+
+// Ustawienie sekrety w konfiguracji
+builder.Configuration["AppSettings:Token"] = secretToken.Value.ToString();
+
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Moje API", Version = "v1" });
+c.SwaggerDoc("v1", new OpenApiInfo { Title = "Moje API", Version = "v1" });
 
     // Konfiguracja autoryzacji JWT w Swaggerze
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
