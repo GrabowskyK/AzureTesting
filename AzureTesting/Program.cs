@@ -1,6 +1,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
+using AzureTesting;
 using AzureTesting.Database;
 using AzureTesting.Model;
 using AzureTesting.Service.ImageServ;
@@ -32,14 +33,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var keyVaultUrl = "https://privatekeygrabowsky.vault.azure.net/";
-var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
-
-// Pobranie sekretu
-var secretToken = await secretClient.GetSecretAsync("jwtTokenKey");
-
-// Ustawienie sekrety w konfiguracji
-builder.Configuration["AppSettings:Token"] = secretToken.Value.ToString();
+KeyVaultConfig.AddKeyVaultSecrets(builder.Configuration).GetAwaiter().GetResult();
 
 builder.Services.AddSwaggerGen(c =>
 {
