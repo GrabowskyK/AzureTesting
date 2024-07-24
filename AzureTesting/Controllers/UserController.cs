@@ -41,7 +41,7 @@ namespace AzureTesting.Controllers
         }
 
         //test 'bearer token'
-        [HttpGet("TestToken")]
+        [HttpGet("TestBearerToken")]
         public ActionResult<string> TestTokenJWT()
         {
             var Id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
