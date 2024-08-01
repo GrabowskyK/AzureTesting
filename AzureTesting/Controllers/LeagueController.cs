@@ -1,4 +1,5 @@
 ﻿using AzureTesting.DTO.League;
+using AzureTesting.Model;
 using AzureTesting.Service.BlobServ;
 using AzureTesting.Service.LeagueServ;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -22,23 +23,60 @@ namespace AzureTesting.Controllers
         }
 
         [HttpGet("GetLeagues")]
-        public IActionResult GetLeagues()
+        public ActionResult<LeagueInfoDTO> GetLeagues()
         {
-            return Ok();
+            var leagues = leagueService.GetLeagues();
+            return Ok(leagues);
+        }
+
+        [HttpGet("LeagueById")]
+        public ActionResult<League> GetLeagueById([FromRoute] int leagueId)
+        {
+            var league = leagueService.GetLeagueById(leagueId);
+            if (league != null)
+            {
+                return Ok(league);
+            }
+            return BadRequest("League dosent exist!");
         }
 
         [HttpPost("AddLeague")]
-        public IActionResult AddLeague(LeagueInfoDTO league, IFormFile file)
+        public IActionResult AddLeague([FromForm] CreateLeague createLeague)
         {
-            var blobUrl = blobService.AddBlobAsync(file);
-          //  leagueService.AddBlobServiceClient()
-            return Ok();
+            string? blobUrl = null;
+            if(createLeague.File == null)
+            {
+                blobUrl = null;
+            }
+            else
+            {
+                blobUrl = blobService.AddBlob(createLeague.File).ToString();
+            }
+            leagueService.AddLeague(createLeague, blobUrl);
+
+            return Ok($"{createLeague.Name} has been added!");
         }
 
         [HttpDelete("RemoveLeague")]
-        public IActionResult RemoveLeague()
+        public IActionResult RemoveLeague(int leagueId)
         {
-            return Ok();
+            try
+            {
+                leagueService.RemoveLeague(leagueId);
+                return Ok("League has been deleted!");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.ToString());
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpPatch("UpdateLeague")]
+        public ActionResult<CreateLeague> UpdateLeague(PatchLeague league,int editedLeagueId)
+        {
+            leagueService.PatchLeague(league, editedLeagueId);
+            return Ok("League has been updated!");
         }
     }
 }

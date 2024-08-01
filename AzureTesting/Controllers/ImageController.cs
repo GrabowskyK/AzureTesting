@@ -24,13 +24,28 @@ namespace AzureTesting.Controllers
         [HttpPost("AddImage")]
         public IActionResult AddImage(IFormFile file)
         {
-            if (file.FileName != "jpg" && file.FileName != "png" && file.FileName != "jpeg")
+            List<string> fileFormat = new List<string>()
+            {
+                "image/jpg",
+                "image/png",
+                "image/jpeg"
+            };
+
+            if (!fileFormat.Contains(file.ContentType))
             {
                 return BadRequest("Wrong format!");
             }
-            var urlFile = blobService.AddBlobAsync(file);
+
+            var urlFile = blobService.AddBlob(file);
             ImageService.SaveImageAsync(urlFile.ToString(), file.FileName);
             return Ok();
+        }
+
+        [HttpGet("GetImages")]
+        public ActionResult<ImageDTO> GetImages() 
+        {
+            var result = blobService.GetImages();
+            return Ok(result);
         }
     }
 }

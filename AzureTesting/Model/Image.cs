@@ -7,6 +7,7 @@
         public string Name { get; set; }
         public string CreatedDate { get; set; } = DateTime.UtcNow.ToString();
 
+        public Image() { }
         public Image(string blobUrl, string name)
         {
             BlobUrl = blobUrl;

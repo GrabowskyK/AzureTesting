@@ -11,11 +11,11 @@ namespace AzureTesting.Database
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Team>()
-                .HasOne(t => t.League)
-                .WithMany()
-                .HasForeignKey(t => t.LeagueId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Team>()
+            //    .HasOne(t => t.League)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.LeagueId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Team>()
                 .HasOne(t => t.Image)
@@ -28,6 +28,7 @@ namespace AzureTesting.Database
         public DbSet<Team> Teams { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Player> Players { get; set; }
 
     }
 }

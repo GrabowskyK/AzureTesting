@@ -4,8 +4,10 @@ using Azure.Storage.Blobs;
 using AzureTesting;
 using AzureTesting.Database;
 using AzureTesting.Model;
+using AzureTesting.Service.BlobServ;
 using AzureTesting.Service.ImageServ;
 using AzureTesting.Service.LeagueServ;
+using AzureTesting.Service.PlayerServ;
 using AzureTesting.Service.TeamServ;
 using AzureTesting.Service.UserServ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,9 +24,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILeagueService, LeagueService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IBlobService, BlobService>();
 
 
 

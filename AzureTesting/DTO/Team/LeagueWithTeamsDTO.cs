@@ -1,21 +1,20 @@
-﻿using AzureTesting.DTO.Image;
-
-namespace AzureTesting.DTO.League
+﻿namespace AzureTesting.DTO.Team
 {
-    public class LeagueInfoDTO
+    public class LeagueWithTeamsDTO
     {
-        public int Id { get; set; }
+        public int id { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
         public int Year { get; set; }
         public string? BlobUrl { get; set; }
+        public List<TeamDTO> Teams { get; set; }
 
-        public LeagueInfoDTO(string name, string shortName, int year)
+        public LeagueWithTeamsDTO() { }
+        public LeagueWithTeamsDTO(string name, string shortName, int year)
         {
             Name = name;
             ShortName = shortName;
             Year = year;
         }
-
     }
 }

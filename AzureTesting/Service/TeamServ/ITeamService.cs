@@ -5,7 +5,8 @@ namespace AzureTesting.Service.TeamServ
 {
     public interface ITeamService
     {
-        IEnumerable<TeamDTO> GetTeamsInLeague(int leagueId);
-        Task AddTeamAsync(Team team);
+        LeagueWithTeamsDTO? GetTeamsInLeague(int leagueId);
+        IEnumerable<Team> GetTeams();
+        void AddTeamAsync(AddTeamDTO newTeam, int leagueId, int? imageId);
     }
 }

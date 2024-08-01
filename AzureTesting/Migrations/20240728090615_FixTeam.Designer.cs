@@ -4,6 +4,7 @@ using AzureTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzureTesting.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240728090615_FixTeam")]
+    partial class FixTeam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,54 +79,6 @@ namespace AzureTesting.Migrations
                     b.ToTable("Leagues");
                 });
 
-            modelBuilder.Entity("AzureTesting.Model.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Assists")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Born")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Goals")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinutesPenalties")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Penalties")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShirtNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("position")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("Players");
-                });
-
             modelBuilder.Entity("AzureTesting.Model.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -133,9 +88,6 @@ namespace AzureTesting.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ImageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LeagueId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -150,8 +102,6 @@ namespace AzureTesting.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId");
-
-                    b.HasIndex("LeagueId");
 
                     b.ToTable("Teams");
                 });
@@ -197,17 +147,6 @@ namespace AzureTesting.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("AzureTesting.Model.Player", b =>
-                {
-                    b.HasOne("AzureTesting.Model.Team", "team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("team");
-                });
-
             modelBuilder.Entity("AzureTesting.Model.Team", b =>
                 {
                     b.HasOne("AzureTesting.Model.Image", "Image")
@@ -215,20 +154,7 @@ namespace AzureTesting.Migrations
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("AzureTesting.Model.League", "League")
-                        .WithMany("Teams")
-                        .HasForeignKey("LeagueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Image");
-
-                    b.Navigation("League");
-                });
-
-            modelBuilder.Entity("AzureTesting.Model.League", b =>
-                {
-                    b.Navigation("Teams");
                 });
 #pragma warning restore 612, 618
         }
