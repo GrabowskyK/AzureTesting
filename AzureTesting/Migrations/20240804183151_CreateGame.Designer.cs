@@ -4,6 +4,7 @@ using AzureTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzureTesting.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240804183151_CreateGame")]
+    partial class CreateGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,43 +24,6 @@ namespace AzureTesting.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.HasSequence("EventSequence");
-
-            modelBuilder.Entity("AzureTesting.Model.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR [EventSequence]");
-
-                    SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("Id"));
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("PlayerId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable((string)null);
-
-                    b.UseTpcMappingStrategy();
-                });
 
             modelBuilder.Entity("AzureTesting.Model.Game", b =>
                 {
@@ -269,58 +235,6 @@ namespace AzureTesting.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AzureTesting.Model.Goal", b =>
-                {
-                    b.HasBaseType("AzureTesting.Model.Event");
-
-                    b.Property<int?>("AssistId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("AssistId");
-
-                    b.ToTable("GameGoals");
-                });
-
-            modelBuilder.Entity("AzureTesting.Model.Penalty", b =>
-                {
-                    b.HasBaseType("AzureTesting.Model.Event");
-
-                    b.Property<float>("Minutes")
-                        .HasColumnType("real");
-
-                    b.Property<int>("PenaltyType")
-                        .HasColumnType("int");
-
-                    b.ToTable("GamePenalties");
-                });
-
-            modelBuilder.Entity("AzureTesting.Model.Event", b =>
-                {
-                    b.HasOne("AzureTesting.Model.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AzureTesting.Model.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AzureTesting.Model.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Player");
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("AzureTesting.Model.Game", b =>
                 {
                     b.HasOne("AzureTesting.Model.Team", "TeamA")
@@ -376,15 +290,6 @@ namespace AzureTesting.Migrations
                     b.Navigation("Image");
 
                     b.Navigation("League");
-                });
-
-            modelBuilder.Entity("AzureTesting.Model.Goal", b =>
-                {
-                    b.HasOne("AzureTesting.Model.Player", "Assist")
-                        .WithMany()
-                        .HasForeignKey("AssistId");
-
-                    b.Navigation("Assist");
                 });
 
             modelBuilder.Entity("AzureTesting.Model.League", b =>

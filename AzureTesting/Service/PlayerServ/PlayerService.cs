@@ -28,7 +28,7 @@ namespace AzureTesting.Service.PlayerServ
         }
 
         public TeamWithPlayers? GetPlayersInTeam(int teamId) {
-            var playersInTeam = databaseContext.Players.Where(p => p.TeamId == teamId).ToList();;
+            var playersInTeam = databaseContext.Players.Where(p => p.TeamId == teamId).OrderBy(p => p.position).ToList();
             var result = databaseContext.Players
             .Where(p => p.TeamId == teamId)
             .Select(t => new TeamWithPlayers()
