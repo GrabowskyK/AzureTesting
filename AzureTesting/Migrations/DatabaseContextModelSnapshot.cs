@@ -100,7 +100,7 @@ namespace AzureTesting.Migrations
 
                     b.HasIndex("TeamBID");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.Image", b =>
@@ -125,7 +125,7 @@ namespace AzureTesting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.League", b =>
@@ -154,7 +154,7 @@ namespace AzureTesting.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("Leagues");
+                    b.ToTable("Leagues", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.Player", b =>
@@ -202,7 +202,7 @@ namespace AzureTesting.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.Team", b =>
@@ -234,7 +234,7 @@ namespace AzureTesting.Migrations
 
                     b.HasIndex("LeagueId");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.User", b =>
@@ -266,7 +266,7 @@ namespace AzureTesting.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.Goal", b =>
@@ -278,7 +278,7 @@ namespace AzureTesting.Migrations
 
                     b.HasIndex("AssistId");
 
-                    b.ToTable("GameGoals");
+                    b.ToTable("GameGoals", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.Penalty", b =>
@@ -291,7 +291,7 @@ namespace AzureTesting.Migrations
                     b.Property<int>("PenaltyType")
                         .HasColumnType("int");
 
-                    b.ToTable("GamePenalties");
+                    b.ToTable("GamePenalties", (string)null);
                 });
 
             modelBuilder.Entity("AzureTesting.Model.Event", b =>

@@ -7,13 +7,16 @@ namespace AzureTesting.DTO.Player
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public int ShirtNumber { get; set; }
         
 
         public PlayerBasicDTO() { }
-        public PlayerBasicDTO(string name, string surname)
+        public PlayerBasicDTO(int id, string name, string surname, int shirtNumber)
         {
+            Id = id;
             Name = name;
             Surname = surname;
+            ShirtNumber = shirtNumber;
         }
     }
 }

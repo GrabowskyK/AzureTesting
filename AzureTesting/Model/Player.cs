@@ -17,11 +17,12 @@
         public int TeamId { get; set; }
 
         public Player() { }
-        public Player(string name, string surname, int teamId)
+        public Player(string name, string surname, int teamId, int shirtNumber)
         {
             Name = name;
             Surname = surname;
             TeamId = teamId;
+            ShirtNumber = shirtNumber;
         }
 
         public enum Position

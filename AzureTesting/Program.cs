@@ -5,6 +5,7 @@ using AzureTesting;
 using AzureTesting.Database;
 using AzureTesting.Model;
 using AzureTesting.Service.BlobServ;
+using AzureTesting.Service.GameServ;
 using AzureTesting.Service.ImageServ;
 using AzureTesting.Service.LeagueServ;
 using AzureTesting.Service.PlayerServ;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILeagueService, LeagueService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IBlobService, BlobService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 
 

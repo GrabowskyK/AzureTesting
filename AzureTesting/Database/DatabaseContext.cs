@@ -16,7 +16,6 @@ namespace AzureTesting.Database
             modelBuilder.Entity<Event>().UseTpcMappingStrategy();
 
 
-
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.Player)
                 .WithMany()

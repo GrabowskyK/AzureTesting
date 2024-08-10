@@ -20,14 +20,14 @@ namespace AzureTesting.Service.PlayerServ
             List<Player> playersList = new List<Player>();
             foreach (var player in players)
             {
-                Player player1 = new Player(player.Name, player.Surname, teamId);
+                Player player1 = new Player(player.Name, player.Surname, teamId, player.ShirtNumber);
                 playersList.Add(player1);
             }
             await databaseContext.Players.AddRangeAsync(playersList);
             await databaseContext.SaveChangesAsync();
         }
 
-        public TeamWithPlayers? GetPlayersInTeam(int teamId) {
+        public TeamWithPlayers GetPlayersInTeam(int teamId) {
             var playersInTeam = databaseContext.Players.Where(p => p.TeamId == teamId).OrderBy(p => p.position).ToList();
             var result = databaseContext.Players
             .Where(p => p.TeamId == teamId)
